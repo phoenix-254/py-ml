@@ -1,30 +1,14 @@
-import pandas as pd
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from music_recommender import MusicRecommender
 
-# Importing the clean data
-music_data = pd.read_csv('files/music.csv')
+test_data = [[21, 1], [22, 0]]
 
-# model input data set
-X = music_data.drop(columns=['genre'])
+mr = MusicRecommender()
 
-# model output data set
-y = music_data['genre']
+for data in test_data:
+    age = data[0]
+    gender = data[1]
 
-# Split the data into train/test
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
+    genre = mr.get_genre(age, gender)
 
-# Create a model
-model = DecisionTreeClassifier()
-
-# Train the model
-model.fit(X_train, y_train)
-
-# Make predictions
-predictions = model.predict(X_test)
-
-# Evaluate the accuracy
-score = accuracy_score(y_test, predictions)
-
-print(f'Accuracy Score: {score}')
+    print(f'A Person having Age: {age} and Gender: {gender} '
+          f'is predicted to like {genre} Genre of music')
